@@ -17,6 +17,7 @@ file(GLOB_RECURSE source_files src/*)
 # Executable
 
 add_executable(${EXECUTABLE_NAME} ${source_files})
+target_include_directories(${EXECUTABLE_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/includes)
 
 # Detect and add SFML
 
