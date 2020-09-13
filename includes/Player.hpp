@@ -14,6 +14,7 @@ class Player {
   public:
     Player();
     ~Player();
+    
     std::vector<int> head();
     void move();
     void set_look(std::vector<int>& tmp);
