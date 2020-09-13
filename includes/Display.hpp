@@ -7,10 +7,12 @@
 
 class Display {
   private:
+    sf::RectangleShape rectangle;
 
   public:
     Display();
     ~Display();
+    
     void draw(Player& p, sf::RenderWindow& window);
 };
 
