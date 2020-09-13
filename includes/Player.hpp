@@ -19,6 +19,7 @@ class Player {
     void set_look(std::vector<int>& tmp);
     int check_collision();
     std::list<std::vector<int>> get_pos();
+    int& get_size();
 };
 
 #endif // !player_hpp

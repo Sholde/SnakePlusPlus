@@ -16,19 +16,19 @@
 void key_controller(Player& p) {
 	std::vector<int> tmp(2);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::TOP_KEY)) {
-		tmp = std::vector<int>(0, -1);
+		tmp = std::vector<int>{0, -1};
 		p.set_look(tmp);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::BOTTOM_KEY)) {
-		tmp = std::vector<int>(0, 1);
+		tmp = std::vector<int>{0, 1};
 		p.set_look(tmp);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LEFT_KEY)) {
-		tmp = std::vector<int>(-1, 0);
+		tmp = std::vector<int>{-1, 0};
 		p.set_look(tmp);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RIGHT_KEY)) {
-		tmp = std::vector<int>(1, 0);
+		tmp = std::vector<int>{1, 0};
 		p.set_look(tmp);
 	}
 }
