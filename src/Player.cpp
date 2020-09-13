@@ -61,9 +61,9 @@ int Player::check_collision() {
 
   //std::cout << x << y << std::endl;
 
-  if (x < 0 || x > 8)
+  if (x < 0 || x > 80)
     return 1;
-  else if (y < 0 || y > 6)
+  else if (y < 0 || y > 60)
     return 1;
   
   int i = 0;
@@ -78,4 +78,8 @@ int Player::check_collision() {
 
 std::list<std::vector<int>> Player::get_pos() {
   return this->pos;
+}
+
+int& Player::get_size() {
+  return this->size;
 }
