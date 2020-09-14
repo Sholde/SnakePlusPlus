@@ -5,7 +5,6 @@
 
 Display::Display(): rectangle() {
   rectangle.setSize(sf::Vector2f(10, 10));
-  rectangle.setFillColor(sf::Color::Green);
 }
 
 Display::~Display() {
@@ -13,6 +12,7 @@ Display::~Display() {
 }
 
 void Display::draw(Player& p, sf::RenderWindow& window) {
+  rectangle.setFillColor(sf::Color::Green);
   std::list<std::vector<int>> l = p.get_pos();
   std::vector<int> tmp;
 
@@ -22,4 +22,11 @@ void Display::draw(Player& p, sf::RenderWindow& window) {
     this->rectangle.setPosition(tmp[0]*10, tmp[1]*10);
     window.draw(rectangle);
   }
+}
+
+void Display::draw(Apple& a, sf::RenderWindow& window) {
+  rectangle.setFillColor(sf::Color::Red);
+  std::vector<int>& tmp = a.get_pos();
+  this->rectangle.setPosition(tmp[0]*10, tmp[1]*10);
+  window.draw(rectangle);
 }

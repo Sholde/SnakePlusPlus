@@ -4,6 +4,7 @@
 #include <SFML/Window.hpp>
 
 #include "Player.hpp"
+#include "Apple.hpp"
 
 class Display {
   private:
@@ -14,6 +15,7 @@ class Display {
     ~Display();
     
     void draw(Player& p, sf::RenderWindow& window);
+    void draw(Apple& a, sf::RenderWindow& window);
 };
 
 #endif // !display_hpp

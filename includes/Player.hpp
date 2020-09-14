@@ -21,6 +21,7 @@ class Player {
     int check_collision();
     std::list<std::vector<int>> get_pos();
     int& get_size();
+    void eat();
 };
 
 #endif // !player_hpp
