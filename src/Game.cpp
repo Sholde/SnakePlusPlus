@@ -1,10 +1,12 @@
 #include <SFML/Window.hpp>
+#include <iostream>
 
 #include "Game.hpp"
 
 Game::Game(): window(sf::VideoMode(800, 600), "SnakePlusPlus"),
               display(),
-              player() {
+              player(),
+							apple() {
 
 }
 
@@ -48,11 +50,19 @@ void Game::start() {
 			after = now;
 		}
 
+		if (this->player.head() == this->apple.get_pos()) {
+			this->player.eat();
+			this->apple.find_new_pos();
+		}
 		if (this->player.check_collision())
 			this->window.close();
 
     this->displayGame();
   }
+}
+
+void Game::end() {
+	std::cout << "Score : " << this->player.get_size() - 3 << std::endl;
 }
 
 void Game::displayGame() {
@@ -61,6 +71,7 @@ void Game::displayGame() {
 
   // draw everything here...
   this->display.draw(this->player, this->window);
+	this->display.draw(this->apple, this->window);
 
   // end the current frame
   this->window.display();

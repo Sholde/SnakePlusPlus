@@ -22,6 +22,8 @@ std::vector<int> Player::head() {
 }
 
 void Player::move() {
+  this->save_last_pos = this->pos.back();
+
   if (this->look.front() == 1) {
     this->pos.pop_back();
     std::vector<int> tmp = this->pos.front();
@@ -82,4 +84,9 @@ std::list<std::vector<int>> Player::get_pos() {
 
 int& Player::get_size() {
   return this->size;
+}
+
+void Player::eat() {
+  this->pos.push_back(this->save_last_pos);
+  this->size++;
 }

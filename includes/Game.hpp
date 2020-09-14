@@ -6,6 +6,7 @@
 
 #include "Display.hpp"
 #include "Player.hpp"
+#include "Apple.hpp"
 
 #define RESTART_KEY R
 #define QUIT_KEY A
@@ -20,6 +21,7 @@ class Game {
     sf::RenderWindow window;
     Display display;
     Player player;
+    Apple apple;
 
     void displayGame();
 
@@ -29,6 +31,7 @@ class Game {
 
     void key_controller();
     void start();
+    void end();
 };
 
 #endif // !game_hpp
