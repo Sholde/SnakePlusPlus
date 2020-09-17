@@ -4,7 +4,6 @@
 #include "Game.hpp"
 
 Game::Game(): window(sf::VideoMode(800, 600), "SnakePlusPlus"),
-              display(),
               player(),
 							apple() {
 
@@ -38,26 +37,19 @@ void Game::key_controller() {
 }
 
 void Game::start() {
-  sf::Clock clock;
+	sf::Clock clock;
 	sf::Time after = clock.getElapsedTime();
 
   while (this->window.isOpen()) {
 		key_controller();
-		
+
 		sf::Time now = clock.getElapsedTime();
 		if((int)now.asMilliseconds() - (int)after.asMilliseconds() > 100) {
-			this->player.move();
+			this->update();
+
+			this->render();
 			after = now;
 		}
-
-		if (this->player.head() == this->apple.get_pos()) {
-			this->player.eat();
-			this->apple.find_new_pos();
-		}
-		if (this->player.check_collision())
-			this->window.close();
-
-    this->displayGame();
   }
 }
 
@@ -65,13 +57,24 @@ void Game::end() {
 	std::cout << "Score : " << this->player.get_size() - 3 << std::endl;
 }
 
-void Game::displayGame() {
+void Game::update() {
+	this->player.move();
+
+	if (this->player.head() == this->apple.get_pos()) {
+		this->player.eat();
+		this->apple.find_new_pos();
+	}
+	if (this->player.check_collision())
+		this->window.close();
+}
+
+void Game::render() {
   // clear the window with black color
   this->window.clear(sf::Color::Black);
 
   // draw everything here...
-  this->display.draw(this->player, this->window);
-	this->display.draw(this->apple, this->window);
+  this->player.draw(this->window);
+	this->apple.draw(this->window);
 
   // end the current frame
   this->window.display();
