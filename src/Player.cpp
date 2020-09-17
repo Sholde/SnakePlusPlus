@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-Player::Player() {
+Player::Player() : Entity(sf::Color::Green) {
   this->size = 3;
 
   this->pos.push_back(std::vector<int>(2, 0));
@@ -17,7 +17,7 @@ Player::~Player() {
   
 }
 
-std::vector<int> Player::head() {
+const std::vector<int>& Player::head() {
   return this->pos.front();
 }
 
@@ -61,8 +61,6 @@ int Player::check_collision() {
   int x = this->head().front();
   int y = this->head().back();
 
-  //std::cout << x << y << std::endl;
-
   if (x < 0 || x > 80)
     return 1;
   else if (y < 0 || y > 60)
@@ -78,10 +76,6 @@ int Player::check_collision() {
   return 0;
 }
 
-std::list<std::vector<int>> Player::get_pos() {
-  return this->pos;
-}
-
 int& Player::get_size() {
   return this->size;
 }
@@ -89,4 +83,23 @@ int& Player::get_size() {
 void Player::eat() {
   this->pos.push_back(this->save_last_pos);
   this->size++;
+}
+
+void Player::draw(sf::RenderWindow& window) {
+  std::list<std::vector<int>> l = this->pos;
+  std::vector<int> tmp;
+
+  this->rectangle.setFillColor(sf::Color(0, 200, 0));
+  tmp = l.front();
+  l.pop_front();
+  this->rectangle.setPosition(tmp[0]*10, tmp[1]*10);
+  window.draw(this->rectangle);
+
+  this->rectangle.setFillColor(sf::Color::Green);
+  for(int i = 1; i < this->size; i++) {
+    tmp = l.front();
+    l.pop_front();
+    this->rectangle.setPosition(tmp[0]*10, tmp[1]*10);
+    window.draw(this->rectangle);
+  }
 }

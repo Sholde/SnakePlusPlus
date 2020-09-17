@@ -4,7 +4,9 @@
 #include <list>
 #include <vector>
 
-class Player {
+#include "Entity.hpp"
+
+class Player : public Entity {
   private:
     int size;
     std::list<std::vector<int>> pos;
@@ -15,13 +17,13 @@ class Player {
     Player();
     ~Player();
     
-    std::vector<int> head();
+    const std::vector<int>& head();
     void move();
     void set_look(std::vector<int>& tmp);
     int check_collision();
-    std::list<std::vector<int>> get_pos();
     int& get_size();
     void eat();
+    void draw(sf::RenderWindow& window);
 };
 
 #endif // !player_hpp

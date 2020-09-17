@@ -4,7 +4,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "Display.hpp"
 #include "Player.hpp"
 #include "Apple.hpp"
 
@@ -19,11 +18,11 @@
 class Game {
   private:
     sf::RenderWindow window;
-    Display display;
     Player player;
     Apple apple;
 
-    void displayGame();
+    void update();
+    void render();
 
   public:
     Game();
