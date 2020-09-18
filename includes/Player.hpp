@@ -1,7 +1,7 @@
 #ifndef player_hpp
 #define player_hpp
 
-#include <list>
+#include <deque>
 #include <vector>
 
 #include "Entity.hpp"
@@ -9,7 +9,7 @@
 class Player : public Entity {
   private:
     int size;
-    std::list<std::vector<int>> pos;
+    std::deque<std::vector<int>> pos;
     std::vector<int> look;
     std::vector<int> save_last_pos;
 
@@ -24,6 +24,9 @@ class Player : public Entity {
     int& get_size();
     void eat();
     void draw(sf::RenderWindow& window);
+    void draw_head(sf::RenderWindow& window);
+    void draw_body(sf::RenderWindow& window);
+    void draw_tail(sf::RenderWindow& window);
 };
 
 #endif // !player_hpp

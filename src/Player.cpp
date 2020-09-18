@@ -86,20 +86,166 @@ void Player::eat() {
 }
 
 void Player::draw(sf::RenderWindow& window) {
-  std::list<std::vector<int>> l = this->pos;
-  std::vector<int> tmp;
+  this->draw_head(window);
 
-  this->rectangle.setFillColor(sf::Color(0, 200, 0));
-  tmp = l.front();
-  l.pop_front();
-  this->rectangle.setPosition(tmp[0]*10, tmp[1]*10);
-  window.draw(this->rectangle);
+  this->draw_body(window);
 
-  this->rectangle.setFillColor(sf::Color::Green);
-  for(int i = 1; i < this->size; i++) {
-    tmp = l.front();
-    l.pop_front();
-    this->rectangle.setPosition(tmp[0]*10, tmp[1]*10);
-    window.draw(this->rectangle);
+  this->draw_tail(window);
+}
+
+void Player::draw_head(sf::RenderWindow& window) {
+  sf::Texture headTexture;
+  if(!headTexture.loadFromFile("assets/head.png")) {
+    exit(-1);
   }
+  sf::Sprite head(headTexture);
+
+  head.setPosition(this->pos[0][0] * 10, this->pos[0][1] * 10);
+  if (this->look.front() == -1) {
+    head.setRotation(180);
+    head.move(10, 10);
+  }
+  else if (this->look.back() == 1) {
+    head.setRotation(90);
+    head.move(10, 0);
+  }
+  else if (this->look.back() == -1) {
+    head.setRotation(-90);
+    head.move(0, 10);
+  }
+
+  window.draw(head);
+}
+
+void Player::draw_body(sf::RenderWindow& window) {
+  sf::Texture bodyTexture;
+  sf::Texture body_rightTexture;
+  sf::Texture body_leftTexture;
+
+  if(!bodyTexture.loadFromFile("assets/body.png")) {
+    exit(-1);
+  }
+  if(!body_rightTexture.loadFromFile("assets/body_right.png")) {
+    exit(-1);
+  }
+  if(!body_leftTexture.loadFromFile("assets/body_left.png")) {
+    exit(-1);
+  }
+
+  for(int i = 1; i < this->size - 1; i++) {
+    sf::Sprite body;
+    body.setTexture(bodyTexture);
+    body.setPosition(this->pos[i][0] * 10, this->pos[i][1] * 10);
+
+    if (this->pos[i][1] == this->pos[i-1][1] && this->pos[i][1] == this->pos[i+1][1]) {
+      if (this->pos[i][0] > this->pos[i-1][0])
+      {
+        body.setRotation(180);
+        body.move(10, 10);
+      }
+    }
+    else if (this->pos[i][0] == this->pos[i-1][0] && this->pos[i][0] == this->pos[i+1][0]) {
+      if (this->pos[i][1] < this->pos[i-1][1]) {
+        body.setRotation(90);
+        body.move(10, 0);
+      }
+      else
+      {
+        body.setRotation(-90);
+        body.move(0, 10);
+      }
+    }
+    else {
+      if (this->pos[i][0] < this->pos[i-1][0]
+        && this->pos[i][1] == this->pos[i-1][1])
+      {
+        if (this->pos[i][1] > this->pos[i+1][1])
+        {
+          body.setTexture(body_rightTexture);
+        }
+        else
+        {
+          body.setTexture(body_leftTexture);
+          body.setRotation(180);
+          body.move(10, 10);
+        }
+      }
+      else if (this->pos[i][0] == this->pos[i-1][0]
+        && this->pos[i][1] < this->pos[i-1][1])
+      {
+        if (this->pos[i][0] > this->pos[i+1][0])
+        {
+          body.setTexture(body_rightTexture);
+          body.setRotation(90);
+          body.move(0, 10);
+        }
+        else
+        {
+          body.setTexture(body_leftTexture);
+          body.setRotation(90);
+          body.move(10, 0);
+        }
+      }
+      else if (this->pos[i][0] > this->pos[i-1][0]
+        && this->pos[i][1] == this->pos[i-1][1])
+      {
+        if (this->pos[i][1] < this->pos[i+1][1])
+        {
+          body.setTexture(body_rightTexture);
+          body.setRotation(180);
+          body.move(10, 10);
+        }
+        else
+        {
+          body.setTexture(body_leftTexture);
+        }
+      }
+      else if (this->pos[i][0] == this->pos[i-1][0]
+        && this->pos[i][1] > this->pos[i-1][1])
+      {
+        if (this->pos[i][0] < this->pos[i+1][0])
+        {
+          body.setTexture(body_rightTexture);
+          body.setRotation(-90);
+          body.move(10, 0);
+        }
+        else
+        {
+          body.setTexture(body_leftTexture);
+          body.setRotation(-90);
+          body.move(0, 10);
+        }
+      }
+    }
+
+    window.draw(body);
+  }
+}
+
+void Player::draw_tail(sf::RenderWindow& window) {
+  sf::Texture tailTexture;
+  if(!tailTexture.loadFromFile("assets/tail.png")) {
+    exit(-1);
+  }
+  sf::Sprite tail(tailTexture);
+
+  tail.setPosition(this->pos[this->size-1][0] * 10, this->pos[this->size-1][1] * 10);
+  if (this->pos[this->size-1][1] == this->pos[this->size-2][1]
+    && this->pos[this->size-1][0] > this->pos[this->size-2][0]) {
+    tail.setRotation(180);
+    tail.move(10, 10);
+  }
+  else if (this->pos[this->size-1][0] == this->pos[this->size-2][0]) {
+    if (this->pos[this->size-1][1] < this->pos[this->size-2][1]) {
+      tail.setRotation(90);
+      tail.move(10, 0);
+    }
+    else
+    {
+      tail.setRotation(-90);
+      tail.move(0, 10);
+    }
+  }
+
+  window.draw(tail);
 }

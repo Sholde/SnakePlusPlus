@@ -20,6 +20,11 @@ void Apple::find_new_pos() {
 }
 
 void Apple::draw(sf::RenderWindow& window) {
-  this->rectangle.setPosition(this->pos[0] * 10, this->pos[1] * 10);
-  window.draw(this->rectangle);
+  sf::Texture appleTexture;
+  if(!appleTexture.loadFromFile("assets/apple.png")) {
+    exit(-1);
+  }
+  sf::Sprite apple(appleTexture);
+  apple.setPosition(this->pos[0] * 10, this->pos[1] * 10);
+  window.draw(apple);
 }
